@@ -1,0 +1,4 @@
+<a href="/add_to_compare/<%= product.id %>" data-remote='true' class="compare add_compare_product green tooltip-link" data-id="<%= product.taxons.first.parent_id if product.taxons.first %>" data-title="&lt;span class='compare-tooltip'&gt;добавить товар&lt;br /&gt;к сравнению&lt;/span&gt;" data-html="true" data-original-title="" title=""></a>
+
+
+  <a href="/remove_from_comparison/<%= product.id %>" data-remote='true' class="compare red tooltip-link <%='hidden' unless session[:compare_products].include?(product.id.to_s)%>" data-id="<%= product.taxons.first.parent_id if product.taxons.first %>" data-title="&lt;span class='compare-tooltip'&gt;убрать товар&lt;br /&gt;из сравнения&lt;/span&gt;" data-html="true" data-original-title="" title=""></a>

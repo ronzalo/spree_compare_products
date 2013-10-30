@@ -1,0 +1,12 @@
+<%unless @compare_products.empty?%>
+<li class='title' data-id="<%= session[:compare_taxon]%>">
+  Товары в сравнении
+</li>
+<%end%>
+<%@compare_products.each do |cproduct|%>
+  <div><%= link_to mini_image(cproduct, :itemprop => "image",:class=>'compare_img'), '/compare_products', :itemprop => 'url',:class=>'product-image' %></div>
+<%end%>
+<%unless @compare_products.empty?%>
+  <li class='view_compare'><a href='/compare_products'>Сравнить товары</a></li>
+  <li class='view_compare'><a data-remote='true' href='/compare_products/clear'>Очистить список</a></li>
+<%end%>

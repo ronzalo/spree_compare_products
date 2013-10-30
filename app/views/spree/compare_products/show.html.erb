@@ -1,0 +1,20 @@
+<%@body_id='cart'%>
+<% content_for :sidebar do %>
+  <div data-hook="taxon_sidebar_navigation">
+  </div>
+<% end %>
+<h1><%= Spree.t('product_comparison') %></h1>
+
+<table class='comparison'>
+  <% comparison_rows_for(@products, @properties).each_with_index do |row,index| -%>
+    <tr class='tr-comparison'>
+      <th class='th-comparison'><%= row.shift -%></th>
+      <% row.each do |field| -%>
+        <td class='td-comparison'><%= raw field || "&mdash;" %></td>
+      <% end -%>
+    </tr>
+  <% end -%>
+</table>
+
+<div class='pad-top'><%= link_to Spree.t('continue_shopping'), seo_url(@taxon), :class => 'button compare-continue' %></div>
+
