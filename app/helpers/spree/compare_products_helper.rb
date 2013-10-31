@@ -37,7 +37,7 @@ module Spree
     # Example:
     #   ["Product", "Name", ..., "Price"]
     def comparison_fields_for(products, properties)
-      [t('product'), t('name')].tap { |fields|
+      [t('product'), Spree::Product.human_attribute_name('name')].tap { |fields|
         properties.each { |property| fields << property.presentation }
       }.tap { |fields|
         fields << Spree.t('price')

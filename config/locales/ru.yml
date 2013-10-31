@@ -1,5 +1,8 @@
 ru:
   product: ''
   spree:
+    products_in_comparison: "Товары в сравнении"
+    clear_compare_products_list: "Очистить список"
+    compare_products: "Сравнить товары"
     product_comparison: 'Сравнение товаров'
 

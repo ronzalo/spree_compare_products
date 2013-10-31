@@ -1,24 +1,23 @@
 module Spree
   class CompareProductsController < Spree::StoreController
-    before_filter :find_taxon, :only=>:show
-    before_filter :find_products,:only=>:show
-    before_filter :check_comparable_data,:only=>:add_compare_product
+    before_filter :find_taxon, :only=>:index
+    before_filter :find_products,:only=>:index
+    before_filter :check_comparable_data,:only=>:add
 
     helper 'spree/products', 'spree/taxons'
 
     # We return the list of properties here so we can use them latter.
-    def show
+    def index
       @properties = @products.map(&:properties).flatten.uniq
-      render 'spree/compare_products/show'
     end
 
-    def clear
+    def destroy
       session[:compare_products] = []
       @products = []
-      render 'spree/compare_products/add_compare_product',:layout=>false
+      render :add
     end
 
-    def add_compare_product
+    def add
       session[:compare_taxon] ||= 0
       session[:compare_products] ||= []
       if @taxon.id == session[:compare_taxon]
@@ -30,15 +29,14 @@ module Spree
         session[:compare_products] << params[:id]
       end
       @products = Spree::Product.find(:all, :conditions => { :id => session[:compare_products]} ,:limit => 4)
-      render 'spree/compare_products/add_compare_product',:layout=>false
     end
 
-    def remove_from_comparison
+    def remove
       if session[:compare_products].include?(params[:id])
         session[:compare_products].delete(params[:id])
       end
       @products = Spree::Product.find(:all, :conditions => { :id => session[:compare_products]} ,:limit => 4)
-      render 'spree/compare_products/add_compare_product',:layout=>false
+      render :add
     end
 
     private

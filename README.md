@@ -19,6 +19,8 @@ bundle
 bundle exec rails g spree_compare_products:install
 ```
 
+You need to have "<div data-hook='compare_links'></div>" somewhere on your product page or products list page to let Deface to inject "compare" links.
+
 Testing
 -------
 

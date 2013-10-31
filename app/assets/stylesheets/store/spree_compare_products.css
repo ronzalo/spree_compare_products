@@ -1,4 +1,15 @@
 /*
- *= require store/spree_frontend
+ *= require_self
 */
-
+.td-comparison {
+  width: 200px;
+  border-bottom: 1px solid #EEE;
+  padding-left: 10px;
+}
+.th-comparison {
+  width: 200px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #EEE;
+  padding-left: 10px;
+}

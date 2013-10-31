@@ -1,12 +1,18 @@
-<%unless @products.empty?%>
-<li class='title' data-id="<%= session[:compare_taxon]%>">Продукты в сравнении</li>
-<%end%>
-<%unless @products.empty?%>
-  <%@products.each do |product|%>
-    <div><%= link_to small_image(product, :itemprop => "image",:class=>'compare_img'), '/compare_products', :itemprop => 'url',:class=>'product-image' %></div>
-  <%end%>
-<%end%>
-<%unless @products.empty?%>
-  <li class='view_compare'><a href='/compare_products'>Сравнить товары</a></li>
-  <li class='view_compare'><a data-remote='true' href='/compare_products/clear'>Очистить список</a></li>
-<%end%>
+<% unless @products.empty? %>
+<li class='title' data-id="<%= session[:compare_taxon]%>">
+  <%= Spree.t(:products_in_comparison) %>
+</li>
+<% end %>
+<% @products.each do |cproduct|%>
+  <div>
+    <%= link_to mini_image(cproduct, :itemprop => "image",:class=>'compare_img'), compare_products_path, :itemprop => 'url',:class=>'product-image' %>
+  </div>
+<% end %>
+<% unless @products.empty? %>
+  <li class='view_compare'>
+    <%= link_to Spree.t(:compare_products), compare_products_path %>
+  </li>
+  <li class='view_compare'>
+    <%= link_to Spree.t(:clear_compare_products_list), compare_product_path(0), :method => :delete, :remote => true %>
+  </li>
+<% end %>
