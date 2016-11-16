@@ -45,7 +45,6 @@ module Spree
         fields << Spree.t('price')
         fields << ''
       }
-
     end
   end
 end

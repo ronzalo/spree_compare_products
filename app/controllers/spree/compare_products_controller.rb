@@ -34,7 +34,10 @@ module Spree
       if session[:compare_products].include?(params[:id])
         session[:compare_products].delete(params[:id])
       end
-      render :add
+      respond_to do |format|
+        format.js { render :add }
+        format.html { redirect_to compare_products_path }
+      end
     end
 
     private
