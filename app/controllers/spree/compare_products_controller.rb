@@ -1,8 +1,8 @@
 module Spree
   class CompareProductsController < Spree::StoreController
-    before_filter :find_taxon, :only=>:index
-    before_filter :find_products,:only=>:index
-    before_filter :check_comparable_data,:only=>:add
+    before_filter :find_taxon, only: :index
+    before_filter :find_products, only: :index
+    before_filter :check_comparable_data, only: [:add, :remove]
 
     helper 'spree/products', 'spree/taxons'
 
@@ -24,18 +24,16 @@ module Spree
         session[:compare_products] << params[:id]
         session[:compare_products] = session[:compare_products].uniq.last(4)
       else
-        session[:compare_taxon]=@taxon.id
-        session[:compare_products]=[]
+        session[:compare_taxon] = @taxon.id
+        session[:compare_products] = []
         session[:compare_products] << params[:id]
       end
-      @products = Spree::Product.find(:all, :conditions => { :id => session[:compare_products]} ,:limit => 4)
     end
 
     def remove
       if session[:compare_products].include?(params[:id])
         session[:compare_products].delete(params[:id])
       end
-      @products = Spree::Product.find(:all, :conditions => { :id => session[:compare_products]} ,:limit => 4)
       render :add
     end
 
@@ -43,16 +41,16 @@ module Spree
 
 
     def check_comparable_data
-      @product=Spree::Product.find(params[:id])
-      render :nothing=>true if !@product
-      first_taxon=@product.taxons.joins(:taxonomy).where("spree_taxonomies.name != 'популярные товары' ").first
-      @taxon=first_taxon.parent
-      render :nothing=>true if !@taxon
+      @product = Spree::Product.find(params[:id])
+      render nothing: true if !@product
+      first_taxon = @product.taxons.joins(:taxonomy).where("spree_taxonomies.name != 'популярные товары' ").first
+      @taxon = first_taxon.parent
+      render nothing: true if !@taxon
     end
 
     # Find the taxon from the url
     def find_taxon
-      @taxon=Spree::Taxon.find(session[:compare_taxon])
+      @taxon = Spree::Taxon.find(session[:compare_taxon])
     end
 
     # Verifies that the comparison can be made inside this taxon.
@@ -61,18 +59,15 @@ module Spree
     # the url will silently be ignored if they can't be compared inside
     # the taxon or don't exists.
     def find_products
-
       product_ids = session[:compare_products] || []
       if product_ids.length > 4
         flash[:notice] = I18n.t('compare_products.limit_is_4')
         product_ids = product_ids[0..3]
       elsif product_ids.length < 1
         flash[:error] = I18n.t('compare_products.insufficient_data')
-        redirect_to "/t/#{@taxon.permalink}"
+        redirect_to seo_url(@taxon)
       end
-      @products = Spree::Product.find(:all, :conditions => { :id => product_ids},
-                                      :include => { :product_properties => :property },
-                                      :limit => 4)
+      @products = Spree::Product.where(id: product_ids).includes(product_properties: :property).limit(4)
     end
   end
 end

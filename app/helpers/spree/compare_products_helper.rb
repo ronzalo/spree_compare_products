@@ -28,7 +28,9 @@ module Spree
         properties.each do |property|
           fields << product.product_properties.find_by_property_id(property.id).try(:value)
         end
-      }.tap { |fields| fields << "#{sprintf('%.2f',product.price)} <span class='b-rub'>Р</span>" }.tap{|fields| fields<<"#{render :partial=>'spree/shared/add_to_cart_form',:locals=>{:product=>product}}"}
+      }.tap { |fields| fields << display_price(product) }.tap do |fields|
+        fields << render(partial: 'spree/shared/add_to_cart_form', locals: {product: product})
+      end
     end
 
     # Returns an array with the translated names of the fields to be
