@@ -68,7 +68,7 @@ module Spree
         product_ids = product_ids[0..3]
       elsif product_ids.length < 1
         flash[:error] = I18n.t('compare_products.insufficient_data')
-        redirect_to seo_url(@taxon)
+        redirect_to spree.nested_taxons_path(@taxon.permalink)
       end
       @products = Spree::Product.where(id: product_ids).includes(product_properties: :property).limit(4)
     end
