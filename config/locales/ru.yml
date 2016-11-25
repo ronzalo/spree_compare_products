@@ -5,5 +5,4 @@ ru:
     clear_compare_products_list: "Очистить список"
     compare_products: "Сравнить товары"
     product_comparison: 'Сравнение товаров'
-    compare_products:
-      insufficient_data: 'Не добавлено товаров к сравнению'
+    insufficient_data: 'Не добавлено товаров к сравнению'

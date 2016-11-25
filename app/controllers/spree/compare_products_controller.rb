@@ -64,10 +64,10 @@ module Spree
     def find_products
       product_ids = session[:compare_products] || []
       if product_ids.length > 4
-        flash[:notice] = Spree.t('compare_products.limit_is_4')
+        flash[:notice] = Spree.t('limit_is_4')
         product_ids = product_ids[0..3]
       elsif product_ids.length < 1
-        flash[:error] = Spree.t('compare_products.insufficient_data')
+        flash[:error] = Spree.t('insufficient_data')
         redirect_to spree.nested_taxons_path(@taxon.permalink)
       end
       @products = Spree::Product.where(id: product_ids).includes(product_properties: :property).limit(4)
