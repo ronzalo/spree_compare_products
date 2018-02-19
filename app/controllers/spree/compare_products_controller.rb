@@ -1,8 +1,8 @@
 module Spree
   class CompareProductsController < Spree::StoreController
-    before_filter :find_taxon, only: :index
-    before_filter :find_products, only: :index
-    before_filter :check_comparable_data, only: [:add, :remove]
+    before_action :find_taxon, only: :index
+    before_action :find_products, only: :index
+    before_action :check_comparable_data, only: [:add, :remove]
 
     helper 'spree/products', 'spree/taxons'
 

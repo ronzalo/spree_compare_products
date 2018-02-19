@@ -1,6 +1,6 @@
 Spree::TaxonsController.class_eval do
 
-  before_filter :find_compare_products, only: :show
+  before_action :find_compare_products, only: :show
 
   protected
 

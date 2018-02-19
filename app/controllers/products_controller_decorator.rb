@@ -1,6 +1,6 @@
 Spree::ProductsController.class_eval do
 
-  before_filter :find_compare_products, only: :index
+  before_action :find_compare_products, only: :index
 
   protected
 
