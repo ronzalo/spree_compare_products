@@ -26,9 +26,10 @@ module Spree
         session[:compare_products] = session[:compare_products].uniq.last(4)
       else
         session[:compare_taxon] = @taxon.id
-        session[:compare_products] = []
         session[:compare_products] << params[:id]
       end
+
+      @products = Spree::Product.where(id: session[:compare_products]).limit(4)
     end
 
     def remove

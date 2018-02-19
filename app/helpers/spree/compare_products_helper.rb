@@ -29,9 +29,7 @@ module Spree
         properties.each do |property|
           fields << product.product_properties.find_by_property_id(property.id).try(:value)
         end
-      end.tap { |fields| fields << display_price(product) }.tap do |fields|
-        fields << render(partial: "spree/shared/add_to_cart_form", locals: { product: product })
-      end
+      end.tap { |fields| fields << display_price(product) }
     end
 
     # Returns an array with the translated names of the fields to be
@@ -44,7 +42,6 @@ module Spree
         properties.each { |property| fields << property.presentation }
       end.tap do |fields|
         fields << Spree.t("price")
-        fields << ""
       end
     end
   end

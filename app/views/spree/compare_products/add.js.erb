@@ -1,7 +1,7 @@
-$('.compare-list').html('<%= j render :partial=>'products_list'%>')
+$('.compare-list').html('<%= j render partial: "products_list" %>')
 $('.compare').removeClass('compare')
 $('.red').addClass('hidden')
-<%@products.each do |product|%>
+<% @products.each do |product|%>
   $('#product_<%= product.id%>').addClass('compare')
   $('#product_<%= product.id%>').find('.red').removeClass('hidden')
 <%end%>
