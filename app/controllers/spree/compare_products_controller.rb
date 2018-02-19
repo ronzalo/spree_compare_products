@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 module Spree
   class CompareProductsController < Spree::StoreController
     before_action :find_taxon, only: :index
     before_action :find_products, only: :index
     before_action :check_comparable_data, only: [:add, :remove]
 
-    helper 'spree/products', 'spree/taxons'
+    helper "spree/products", "spree/taxons"
 
     # We return the list of properties here so we can use them latter.
     def index
@@ -42,13 +43,12 @@ module Spree
 
     private
 
-
     def check_comparable_data
       @product = Spree::Product.find(params[:id])
-      render nothing: true if !@product
+      render nothing: true unless @product
       first_taxon = @product.taxons.joins(:taxonomy).where("spree_taxonomies.name != 'популярные товары' ").first
       @taxon = first_taxon.parent
-      render nothing: true if !@taxon
+      render nothing: true unless @taxon
     end
 
     # Find the taxon from the url
@@ -64,10 +64,10 @@ module Spree
     def find_products
       product_ids = session[:compare_products] || []
       if product_ids.length > 4
-        flash[:notice] = Spree.t('limit_is_4')
+        flash[:notice] = Spree.t("limit_is_4")
         product_ids = product_ids[0..3]
-      elsif product_ids.length < 1
-        flash[:error] = Spree.t('insufficient_data')
+      elsif product_ids.empty?
+        flash[:error] = Spree.t("insufficient_data")
         redirect_to spree.nested_taxons_path(@taxon.permalink)
       end
       @products = Spree::Product.where(id: product_ids).includes(product_properties: :property).limit(4)
