@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 Spree::Core::Engine.routes.draw do
   # Add your extension routes here
-  resources :compare_products, :only => [:index, :destroy] do
+  resources :compare_products, only: [:index, :destroy] do
     member do
-      put 'add'
-      delete 'remove'
+      put "add"
+      delete "remove"
     end
   end
 end

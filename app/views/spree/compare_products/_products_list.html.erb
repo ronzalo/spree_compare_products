@@ -1,13 +1,15 @@
 <% unless @products.empty? %>
-<li class='title' data-id="<%= session[:compare_taxon]%>">
-  <%= Spree.t(:products_in_comparison) %>
-</li>
+  <li class='title' data-id="<%= session[:compare_taxon]%>">
+    <%= Spree.t(:products_in_comparison) %>
+  </li>
 <% end %>
+
 <% @products.each do |cproduct|%>
   <div>
     <%= link_to mini_image(cproduct, :itemprop => "image",:class=>'compare_img'), compare_products_path, :itemprop => 'url',:class=>'product-image' %>
   </div>
 <% end %>
+
 <% unless @products.empty? %>
   <li class='view_compare'>
     <%= link_to Spree.t(:compare_products), compare_products_path %>
